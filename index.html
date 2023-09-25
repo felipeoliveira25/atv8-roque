@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Verificador de Quadrado Mágico</title>
+</head>
+<body>
+  <h1>Verificador de Quadrado Mágico</h1>
+  <p>Insira os valores da matriz separados por espaços:</p>
+  <input type="text" id="matrizInput" placeholder="Digite os valores da matriz">
+  <button onclick="verificarQuadradoMagico()">Verificar</button>
+
+  <script>
+    function matrizQuadradaMagica() {
+      var input = document.getElementById('matrizInput').value;
+      var valores = input.split(/\s+/).map(Number);
+      var tamanho = Math.sqrt(valores.length);
+
+      if (tamanho % 1 !== 0) {
+        alert('A matriz não é quadrada.');
+        return;
+      }
+
+      var matriz = [];
+      var index = 0;
+      for (var i = 0; i < tamanho; i++) {
+        matriz[i] = [];
+        for (var j = 0; j < tamanho; j++) {
+          matriz[i][j] = valores[index++];
+        }
+      }
+
+      var somas = new Set();
+
+      for (var i = 0; i < tamanho; i++) {
+        var somaLinha = 0;
+        var somaColuna = 0;
+        for (var j = 0; j < tamanho; j++) {
+          somaLinha += matriz[i][j];
+          somaColuna += matriz[j][i];
+        }
+        somas.add(somaLinha);
+        somas.add(somaColuna);
+      }
+
+      var somaDiagonalPrincipal = 0;
+      var somaDiagonalSecundaria = 0;
+
+      for (var i = 0; i < tamanho; i++) {
+        somaDiagonalPrincipal += matriz[i][i];
+        somaDiagonalSecundaria += matriz[i][tamanho - 1 - i];
+      }
+
+      somas.add(somaDiagonalPrincipal);
+      somas.add(somaDiagonalSecundaria);
+
+      if (somas.size === 1) {
+        alert('É um Quadrado Mágico!');
+      } else {
+        alert('Não é um Quadrado Mágico.');
+      }
+    }
+
+    function verificarQuadradoMagico() {
+      matrizQuadradaMagica();
+    }
+  </script>
+</body>
+</html>
